@@ -4,7 +4,7 @@ import GithubContext from '../../context/github/GithubContext';
 function UserSearch() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { users } = useContext(GithubContext);
+  const { users, searchUsers } = useContext(GithubContext);
 
   const handleChange = evt => setSearchTerm(evt.target.value);
 
@@ -13,7 +13,7 @@ function UserSearch() {
     if (!searchTerm.length) {
       alert('Please enter a search term')
     } else {
-      // @todo - search users
+      searchUsers(searchTerm);
       setSearchTerm('');
     }
   }
