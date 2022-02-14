@@ -21,10 +21,11 @@ export const AlertProvider = ({children}) => {
       type: ACTIONS.REMOVE_ALERT
     }), 3000)
   }
+  
   return (
     <AlertContext.Provider value={{
       alert: state,
-      setAlert
+      setAlert,
     }}>
       {children}
     </AlertContext.Provider>
