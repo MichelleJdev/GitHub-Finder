@@ -1,21 +1,28 @@
 export const ACTIONS = {
   GET_USERS: 'GET_USERS',
+  GET_USER: 'GET_USER',
   SET_LOADING: 'SET_LOADING',
   CLEAR_USERS: 'CLEAR_USERS',
 }
 
-const githubReducer = (state, action) => {
-  switch (action.type) {
+const githubReducer = (state, {type, payload}) => {
+  switch (type) {
     case ACTIONS.GET_USERS:
       return {
         ...state,
-        users: action.payload,
+        users: payload,
         loading: false
+      }
+    case ACTIONS.GET_USER:
+      return {
+        ...state,
+        loading: false,
+        user: payload
       }
     case ACTIONS.SET_LOADING:
       return {
         ...state,
-        loading: action.payload
+        loading: payload
       }
     case ACTIONS.CLEAR_USERS:
       return {
