@@ -2,22 +2,36 @@ import { useState, useContext } from 'react';
 import GithubContext from '../../context/github/GithubContext';
 import AlertContext from '../../context/alert/AlertContext';
 import Alert from '../layout/Alert';
+import { searchUsers } from '../../context/github/GithubActions';
+import { ACTIONS } from '../../context/github/GithubReducer';
+
+const { GET_USERS, SET_LOADING } = ACTIONS;
 
 function UserSearch() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { users, clearUsers, dispatch } = useContext(GithubContext);
 
   const { setAlert } = useContext(AlertContext);
 
   const handleChange = evt => setSearchTerm(evt.target.value);
 
-  const handleSubmit = evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     if (!searchTerm.length) {
       setAlert('Please enter a search term', 'error')
     } else {
-      searchUsers(searchTerm);
+      dispatch({
+        type: SET_LOADING,
+        payload: true
+      })
+
+      const users = await searchUsers(searchTerm);
+
+      dispatch({
+        type: GET_USERS,
+        payload: users
+      });
       setSearchTerm('');
     }
   }
