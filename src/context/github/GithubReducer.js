@@ -1,9 +1,8 @@
 export const ACTIONS = {
   GET_USERS: 'GET_USERS',
-  GET_USER: 'GET_USER',
+  GET_USER_AND_REPOS: 'GET_USER_AND_REPOS',
   SET_LOADING: 'SET_LOADING',
   CLEAR_USERS: 'CLEAR_USERS',
-  GET_REPOS: 'GET_REPOS'
 }
 
 const githubReducer = (state, {type, payload}) => {
@@ -14,11 +13,12 @@ const githubReducer = (state, {type, payload}) => {
         users: payload,
         loading: false
       }
-    case ACTIONS.GET_USER:
+    case ACTIONS.GET_USER_AND_REPOS:
       return {
         ...state,
+        user: payload.user,
+        repos: payload.repos,
         loading: false,
-        user: payload
       }
     case ACTIONS.SET_LOADING:
       return {
@@ -29,12 +29,6 @@ const githubReducer = (state, {type, payload}) => {
       return {
         ...state,
         users: []
-      }
-    case ACTIONS.GET_REPOS:
-      return {
-        ...state,
-        repos: payload,
-        loading: false
       }
     default:
       return state;

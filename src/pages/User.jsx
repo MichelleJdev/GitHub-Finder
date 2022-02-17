@@ -4,10 +4,10 @@ import RepoList from '../components/repos/RepoList';
 import Spinner from '../components/layout/Spinner';
 import GithubContext from '../context/github/GithubContext';
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa';
-import { getUser, getRepos } from '../context/github/GithubActions';
+import { getUserAndRepos } from '../context/github/GithubActions';
 import { ACTIONS } from '../context/github/GithubReducer';
 
-const { GET_USER, GET_REPOS, SET_LOADING } = ACTIONS;
+const { GET_USER_AND_REPOS, SET_LOADING } = ACTIONS;
 
 function User() {
   const { dispatch, user, loading, repos } = useContext(GithubContext);
@@ -20,15 +20,10 @@ function User() {
       payload: true
     })
     const getUserData = async () => {
-      const user = await getUser(params.login);
+      const userData = await getUserAndRepos(params.login);
       dispatch({
-        type: GET_USER,
-        payload: user
-      })
-      const repos = await getRepos(params.login);
-      dispatch({
-        type: GET_REPOS,
-        payload: repos
+        type: GET_USER_AND_REPOS,
+        payload: userData
       })
     }
 
